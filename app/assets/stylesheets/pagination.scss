@@ -1,0 +1,45 @@
+@import 'variables.scss';
+
+.returns-pagination__container {
+	display: flex;
+	background-color: #FFF;		
+	padding: 10px 50px;
+	height: 30px;
+
+	.pagination__range {
+		display: flex;	
+		align-items: center;
+		font-family: 'Open Sans', sans-serif;
+		padding: 0 10px;
+	}
+
+	.pagination__controls {
+		display: flex;
+		margin: 0 0 0 auto;
+
+		a {
+			display: flex;
+		}
+
+		.pagination__control {
+			display: flex;
+			align-items: center;
+			margin: 0 5px;
+			font-family: 'Open Sans', sans-serif;
+			font-size: 18px;
+
+			&:hover {
+				cursor: pointer;
+			}
+
+			&.current_page {
+				text-decoration: underline;
+			}
+
+			svg {
+				height: 25px;
+				width: 30px;
+			}
+		}
+	}
+}

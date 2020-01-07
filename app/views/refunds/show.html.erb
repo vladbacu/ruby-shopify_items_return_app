@@ -1,0 +1,231 @@
+<div class='request-show__container'>
+	<div class='request-show__header'>
+		<h1>Order: <%= @order.name %></h1>
+	</div>
+	<div class='request-show__menu'>
+		<div class='request-show__menu-btn'>
+			<i class="arrow"></i>
+			<%= link_to 'All Requests', refunds_path %>
+		</div>
+		<div class='request-show__menu-btn'>
+			<a href='https://<%= @shop_url %>/admin/orders/<%= @order.id %>' target='_blank'>View order</a>
+		</div>
+	</div>
+	<div class='request-show__body'>
+		<div class='request-progress__container'>
+			<div class='request-progress__list'>
+				<% financial = @progress['financial'].downcase %>
+				<div class='request-progress__item <%= financial %>'>
+					<% if financial == "complete" %>
+						<%= show_svg('complete.svg') %>
+					<% else %>
+						<%= show_svg('incomplete.svg') %>
+					<% end %>
+					<span>Payment received.</span>
+				</div>
+
+				<% fulfillment = @progress['fulfillment'].downcase %>
+				<div class='request-progress__item <%= fulfillment %>'>
+					<% if fulfillment == "complete" %>
+						<%= show_svg('complete.svg') %>
+					<% else %>
+						<%= show_svg('incomplete.svg') %>
+					<% end %>
+					<span>Items fulfilled.</span>
+				</div>
+
+				<% label = @progress['label'].downcase %>
+				<div class='request-progress__item <%= label %>'>
+					<% if label == "complete" %>
+						<%= show_svg('complete.svg') %>
+					<% else %>
+						<%= show_svg('incomplete.svg') %>
+					<% end %>
+					<span>Return label issued.</span>
+				</div>
+
+				<% items_returned = @progress['items_returned'].downcase %>
+				<div class='request-progress__item <%= items_returned %>'>
+					<% if items_returned == "complete" %>
+						<%= show_svg('complete.svg') %>
+					<% else %>
+						<%= show_svg('incomplete.svg') %>
+					<% end %>
+					<span>Items returned.</span>
+				</div>
+
+				<% payment_refunded = @progress['payment_refunded'].downcase %>
+				<div class='request-progress__item <%= payment_refunded %>'>
+					<% if payment_refunded == "complete" %>
+						<%= show_svg('complete.svg') %>
+					<% else %>
+						<%= show_svg('incomplete.svg') %>
+					<% end %>
+					<span>Payment refunded.</span>
+				</div>
+			</div>
+		</div>
+
+		<div class='request-guide__container'>
+			<% if @progress['financial'] == "Incomplete" %>
+				<p>To begin the return process, we have to capture a payment for the order.</p>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Automatic</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>If you'd like to quickly capture the full authorized amount now, and move on. Click the button below.</p>
+						<div class='request-guide__btn'>
+							<%= link_to 'Capture payment', refund_capture_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Manual</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>If you'd like to review the order first, you can manually capture the payments from the order page (click "View order" above).</p>
+						<p>Once you have reviewed, simply click the "Capture payment" button and follow any prompts.<p>
+						<p>When you are done, click the "I have captured a payment" button to move on to the next step!</p>
+						<p>
+							If you have further questions, consult the official Shopify help page for capturing payments
+							<a href='https://help.shopify.com/en/manual/orders/get-paid' target='_blank'>here.</a>
+						</p>
+						<div class='request-guide__btn'>
+							<%= link_to 'I have captured a payment for this order.', refund_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+			<% elsif @progress['fulfillment'] == "Incomplete" %>
+				<p>
+					To issue a return label, the order must be at least partially fulfilled.
+					Please follow the instructions below to make sure the order has been correctly marked as fulfilled.
+				</p>
+				<p> If you haven't shipped the items yet or do not want to issue a return label for this return, click here to continue.</p>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Automatic</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>If you'd like to automatically fulfill all order items now. Click the button below.</p>
+						<div class='request-guide__btn'>
+							<%= link_to 'Fulfill Order', refund_fulfill_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Manual</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>If you'd like to review the order first, you can manually fulfill the items from the order page (click "View order" above).</p>
+						<p>Once you have reviewed, simply click the "Mark as fulfilled" button and follow any prompts.<p>
+						<p>When you are done, click the "I have fulfilled the order" button to move on to the next step!</p>
+						<p>
+							If you have further questions, consult the official Shopify help page for order fulfillment 
+							<a href='https://help.shopify.com/en/manual/orders/fulfill-orders' target='_blank'>here.</a>
+						</p>
+						<div class='request-guide__btn'>
+							<%= link_to 'I have fulfilled the order.', refund_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+			<% elsif @progress['label'] == "Incomplete" %>
+				<p>To send a return label to your customer, please follow the instructions below.</p>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Automatic</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>
+							To automatically send a shipping label (cost will be reduced from the refund), click the button below.
+							The customer will receive an email with a download link.
+						</p>
+						<div class='request-guide__btn'>
+							<%= link_to 'Issue a return label.', refund_issue_label_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Manual</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>To manually create a return label for this order, visit the order page (click "View order" above).</p>
+						<p>At the top menu, under "More actions", click "Create return label".<p>
+						<p>Follow the prompts and when you are finished, click the "I have issued a return label" button to move on to the next step!</p>
+						<p>
+							If you have further questions, consult the official Shopify help page for return labels 
+							<a href='https://help.shopify.com/en/manual/shipping/shopify-shipping/return-labels' target='_blank'>here.</a>
+						</p>
+						<div class='request-guide__btn'>
+							<%= link_to 'I have issued a return label.', refund_label_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+			<% elsif @progress['items_returned'] == "Incomplete" %>
+				<p>Everything is ready to officially refund the order! You can view the shipping label that was issued below.</p>
+				<div class='request-guide__btn' style='margin-bottom: 25px;'>
+					<a href='<%= @refund.label_url %>' target='_blank'>View label</a>
+				</div>
+
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Requested Items</h1>
+					</div>
+					<div class='request-section__body'>
+						<%= render 'components/items-summary', order: @order, refund: @refund %>
+					</div>
+				</div>
+
+				<p>If you have received the requested items, or are not expecting the items, click the button below to setup the payment refund.</p>
+				<div class='request-guide__btn'>
+					<%= link_to 'I am ready to refund payment.', refund_items_path(:id => @refund.id) %>
+				</div>
+			<% elsif @progress['payment_refunded'] == "Incomplete" %>
+				<% if @refund['refund_method'] == "Primary" %>
+					<div class='request-guide__section'>
+						<div class='request-section__header'>
+							<h1>Automatic</h1>
+						</div>
+						<div class='request-section__body'>
+							<p>
+								The customer has requested refunds be directed to the original payment method.
+								The button below will officially issue a refund for the order total (subtracting shipping costs).
+							</p>
+							<div class='request-guide__btn'>
+								<%= link_to 'Refund to original payment method.', refund_payment_path(:id => @refund.id) %>
+							</div>
+						</div>
+					</div>
+				<div class='request-guide__section'>
+					<div class='request-section__header'>
+						<h1>Manual</h1>
+					</div>
+					<div class='request-section__body'>
+						<p>
+							If you have manually handled the refund outside of the app, click the button below to mark this return request as complete.
+						<p>
+						<div class='request-guide__btn'>
+							<%= link_to 'I have manually issued a refund.', refund_manual_payment_path(:id => @refund.id) %>
+						</div>
+					</div>
+				</div>
+				<% else %>
+					<p>
+						The customer has requested refunds be directed to a gift card.
+						The text field can be used to add a gift card note (optional),
+						When ready, the button below will officially issue a gift card for the order total (subtracting shipping costs).
+					</p>
+					<div class='request-guide__btn'>
+						<%= link_to 'Refund to gift card.', refund_payment_path(:id => @refund.id) %>
+					</div>
+					<div class='request-guide__btn'>
+						<%= link_to 'Change refund to original payment method.', refund_payment_change_path(:id => @refund.id) %>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>

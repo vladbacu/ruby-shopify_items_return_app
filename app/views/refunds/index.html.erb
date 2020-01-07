@@ -1,0 +1,44 @@
+<div class="refunds-view__container">
+	<div class="refunds-header__container">
+		<h1>Return Requests</h1>
+	</div>
+	<div class="refunds-menu__container">
+		<div class="refunds-menu__link <%= 'active' if @refund_filter == 'in-progress' %>">
+			<%= link_to 'In Progress', refunds_path(:refund_filter => 'in-progress') %>
+		</div>
+		<div class="refunds-menu__link <%= 'active' if @refund_filter == 'complete' %>">
+			<%= link_to 'Complete', refunds_path(:refund_filter => 'complete') %>
+		</div>
+		<div class="refunds-menu__link <%= 'active' if @refund_filter == 'all' %>">
+			<%= link_to 'All', refunds_path(:refund_filter => 'all') %>
+		</div>
+		<%= render 'components/search' %>
+	</div>
+	<div class="refunds-body__container">
+		<%= render 'components/pagination' %>
+		<% @refund_requests.each do |refund| %>
+			<% 
+				if refund.payment_refunded == 'Complete'
+					status_cls = 'refund-card__status positive'
+					status_msg = 'Return Complete'
+				else
+					status_cls = 'refund-card__status negative'
+					status_msg = 'Return Pending'
+				end
+			%>
+			<%= link_to refund_path(:id => refund.id) do %>
+				<div class="refund-card__container">
+					<div class="refund-card__header">
+						<div class="refund-card__number">Order: <%= refund.order_number =%></div>
+						<div class="<%= status_cls %>"><%= status_msg %></div>
+					</div>
+					<div class="refund-card__customer">
+						<%= refund.first_name %>
+						<%= refund.last_name %>
+						requested a return on: <%= refund.created_at.strftime('%b %-d, %Y') %>
+					</div>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+</div>

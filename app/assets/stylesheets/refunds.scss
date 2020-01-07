@@ -1,0 +1,282 @@
+//$primary-color: #ADD585;
+//$primary-color-dark: #3e5437;
+@import 'variables.scss';
+
+html, body, .app-content, .app-wrapper, main {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+}
+
+div.refunds-view__container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+
+	div.refunds-header__container {
+		display: flex;
+		align-items: center;
+	    min-height: 100px;
+	    max-height: 100px;
+		background-color: $primary-color;
+		padding: 0px 50px;
+
+		h1 {
+			font-family: "Comfortaa", sans-serif;
+			margin: 0;
+			color: #000;
+		}
+	}
+
+	div.refunds-menu__container {
+		display: flex;
+		padding: 10px 50px;
+		background-color: $primary-color-dark;
+		height: 30px;
+	    align-items: center;
+
+		div.refunds-menu__link {
+			padding: 10px;
+		    margin-right: 50px;
+		    border-radius: 4px;
+
+			a {
+				font-family: "Comfortaa", sans-serif;
+				color: #555;
+			    text-decoration: none;
+			    font-size: 18px;
+			}	
+
+		    &.active {
+		    	background-color: #fff;
+		    	a {
+		    		color: #000;
+		    	}
+		    }
+		}
+
+
+
+	}
+
+	div.refunds-body__container {
+		flex: 1;
+		// background-color: #FAFAFA;
+		background-color: #EDEDED;
+
+		div.refund-card__container {
+			background-color: #FFF;
+		    margin: 25px 50px;
+		    padding: 15px;
+		    border-radius: 5px;
+		    border-left: 4px solid #FFFFFF00;
+		    box-shadow: 0px 2px 4px 0px #00000021;
+		    font-family: 'Open Sans', sans-serif;
+
+		    &:hover {
+		    	cursor: pointer;
+		    	border-left: 4px solid $primary-color;
+		    	transform: scaleX(1.0125);
+		    }
+
+		    &:active {
+		    	border-left: 4px solid $primary-color-dark;
+		    }
+
+		    div.refund-card__header {
+		    	display: flex;
+		    	align-items: center;
+
+		    	div.refund-card__number {
+		    		font-size: 18px;
+		    		font-weight: 600;
+		    	}
+
+		    	div.refund-card__total {
+		    		margin-left: 10px;
+		    	}
+
+		    	div.refund-card__status {
+		    		padding: 5px 10px;
+				    background-color: #ff9999bd;
+				    border-radius: 4px;	
+				    margin-left: auto;
+
+				    &.positive {
+				    	background-color: #a8f0a8;
+				    }
+		    	}
+		    }
+
+		    div.refund-card__customer {
+		    	color: #555;
+		    }
+		}
+	}
+}
+
+div.request-show__container {
+	height: 100%;
+
+	div.request-show__header {
+		display: flex;
+		align-items: center;
+	    min-height: 100px;
+	    max-height: 100px;
+		background-color: $primary-color;
+		padding: 0px 50px;
+
+		h1 {
+			font-family: "Comfortaa", sans-serif;
+			margin: 0;
+			color: #000;
+		}
+	}
+	div.request-show__menu {
+		display: flex;
+		padding: 10px 50px;
+		background-color: $primary-color-dark;
+		min-height: 30px;
+	    align-items: center;
+
+	    div.request-show__menu-btn {
+	    	display: flex;
+		    align-items: center;
+		    background-color: #FFF;
+			padding: 10px;
+		    margin-right: 50px;
+		    border-radius: 4px;
+
+		    i {
+			  	border: solid black;
+			  	border-width: 0 3px 3px 0;
+			  	display: inline-block;
+			  	padding: 3px;
+			  	transform: rotate(135deg);
+				-webkit-transform: rotate(135deg);
+				margin: 0 5px;
+			}
+
+			a {
+				font-family: "Comfortaa", sans-serif;
+				color: #000;
+			    text-decoration: none;
+			    font-size: 18px;
+			    margin-left: 5px;
+			}
+		}
+	}
+
+	div.request-show__body {
+	    display: flex;
+	    height: 100%;
+	    background-color: #FAFAFA;
+
+	    div.request-progress__container {
+	    	display: flex;
+	    	flex: 1;
+	    	padding: 25px 50px;
+
+	    	div.request-progress__list {
+	    		flex: 1;
+
+	    		div.request-progress__item {
+	    			display: flex;
+				    align-items: center;
+				    font-size: 18px;
+				    color: #ff6868;
+
+				    &.complete {
+				    	color: #19D873;
+				    }
+
+				    &.incomplete {
+				    	circle {
+				    		fill: #ff6868!important;
+				    	}
+				    }
+
+				    span {
+						font-family: "Comfortaa", sans-serif;
+						flex: 4;
+						margin: 10px 0;
+				    }
+
+				    svg {
+				    	flex: 1;
+				    	height: 22px;
+				    	width: 22px;
+				    }
+	    		}
+	    	}
+	    }
+
+	    div.request-guide__container {
+	    	display: flex;
+	    	flex-direction: column;
+	    	flex: 4;
+	    	padding: 25px 50px;
+	    	background-color: #FFF;
+
+	    	p {
+		    	font-family: 'Open Sans', sans-serif;
+		    	font-size: 16px;
+		    	margin: 10px 0;
+	    	}
+
+	    	div.request-guide__section {
+    		    display: flex;
+			    flex-direction: column;
+			    box-shadow: 0px 2px 4px 0px #00000021;
+			    margin: 25px 0;
+			    border-radius: 5px;
+
+			    div.request-section__header {
+			    	h1 {
+			    	    margin: 0;
+						font-family: "Comfortaa", sans-serif;
+					    font-size: 22px;
+					    background-color: #e6e6e6;
+					    padding: 10px;
+					    border-radius: 5px 5px 0 0;
+					}
+			    }
+
+			    div.request-section__body{
+			    	padding: 20px;
+				    p {
+				    	margin: 0 0 10px 0;
+				    }
+
+				    a.underline {
+				    	text-decoration: underline;
+				    }
+			    } 
+	    	}
+	    }
+	    
+	    div.request-guide__btn {
+    	    display: flex;
+		    padding: 10px;
+		    background-color: #fff066;
+		    width: fit-content;
+		    margin-top: 20px;
+		    justify-content: center;
+		    align-items: center;
+		    border-radius: 5px;
+			font-family: "Comfortaa", sans-serif;
+			font-weight: bold;
+			
+			a {
+		    	text-decoration: none;
+		    }
+	    }
+	}
+}

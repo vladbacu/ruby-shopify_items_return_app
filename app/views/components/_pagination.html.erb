@@ -1,0 +1,47 @@
+<div class="returns-pagination__container">
+	<div class="pagination__range">
+		<% range_start = (@pagination_current - 1) * @pagination_size %>
+		<% if @pagination_total == 0 %>
+			<% range_start = -1 %>
+		<% end %>
+		<% range_end = [range_start + @pagination_size, @pagination_total].min %>
+		Viewing <%= range_start + 1 %> - <%= range_end %> out of <%= @pagination_total %>
+	</div>
+	<div class="pagination__controls">
+		<%# Maintain existing request parameters so that paging does not remove anything %>
+		<% qp = request.query_parameters %>
+		<% last_page = (@pagination_total / @pagination_size.to_f).ceil %>
+
+		<%= link_to refunds_path(qp.merge({:pagination_current => 1})) do %>
+			<div class="pagination__control">
+				<%= show_svg('first_page.svg') %>
+			</div>
+		<% end %>
+
+		<% if @pagination_current > 1 %>
+			<%= link_to refunds_path(qp.merge({:pagination_current => @pagination_current - 1})) do %>
+				<div class="pagination__control">
+					<%= @pagination_current - 1 %>
+				</div>
+			<% end %>
+		<% end %>
+
+		<div class="pagination__control current_page">
+			<%= @pagination_current %>
+		</div>
+
+		<% if @pagination_current < last_page %>
+			<%= link_to refunds_path(qp.merge({:pagination_current => @pagination_current + 1})) do %>
+				<div class="pagination__control">
+					<%= @pagination_current + 1  %>
+				</div>
+			<% end %>
+		<% end %>
+
+		<%= link_to refunds_path(qp.merge({:pagination_current => last_page})) do %>
+			<div class="pagination__control">
+				<%= show_svg('last_page.svg') %>
+			</div>
+		<% end %>
+	</div>
+</div>

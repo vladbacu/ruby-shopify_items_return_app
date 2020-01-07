@@ -1,0 +1,26 @@
+<% unless refund.nil? && order.nil? %>
+
+	<% order_items = order.line_items %>
+	<% refund_items = JSON.parse refund.items %>
+
+	<%# Need to match the unique line item ids from the refund request to the product ids on the order %>
+	<% refund_items.each do |refund_item| %>
+		<% order_items.each do |order_item| %>
+			<% if order_item.id == refund_item['id'] && (refund_item['quantity'].to_i > 0) %>
+				<div class="items-summary__item">
+					<% image_url = get_item_image_url(order_item.product_id, order_item.variant_id) %>
+					<% if image_url.empty? %>
+						<% image_url = 'placeholder.png' %>
+					<% end %>
+					<%= image_tag(image_url) %>
+					<div class="items-summary__item-details">
+						<p><b>Name:</b>  <%= order_item.name %></p>
+						<p><b>Price:</b>  $<%= order_item.price %></p>
+						<p><b>Quantity:</b>  <%= refund_item['quantity'] %></p>
+					</div>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+
+<% end %>

@@ -1,0 +1,11 @@
+<div id="refunds-menu__search" class="refunds-menu__link">
+	<%= form_tag refunds_path, method: :get, :id => "refunds-menu__search-form" do %>
+		<%= label_tag "refunds-menu__search-input", "Search:", class: "refunds-menu__search-label" %>
+		<%= hidden_field_tag 'refund_filter', 'all' %>
+		<%= text_field_tag :search, params[:search], :onenter => "this.form.submit();", id: "refunds-menu__search-input" %>
+		<div id="refunds-menu__search_icon" onclick="submit_search();">
+			<%= show_svg('search_icon.svg') %>
+		</div>
+	<% end %>
+</div>
+
